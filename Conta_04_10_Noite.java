@@ -260,9 +260,18 @@ public class Conta {
     public void delete(String username) {
         try {
             RandomAccessFile ras = new RandomAccessFile("banco.db", "rw");
+            byte lapide = 1;
+            int pos;
 
-            ras.seek(searchUser(username));
-            ras.writeByte(1); // lápide
+            pos = searchUser(username);
+
+            if (pos != 0) {
+                ras.seek(pos);
+                System.out.println("Usuário " + username + " deletado com sucesso!");
+            } else {
+                System.out.println("Usuário não cadastrado!");
+            }
+            ras.writeByte(lapide);
             ras.close();
         } catch (Exception e) {
             e.printStackTrace();
@@ -311,9 +320,11 @@ public class Conta {
                         tamRegistro = ras.readInt();
                     }
 
-                    if (searchUsername.equals(username)) {
-                        ras.close();
-                        return i;
+                    if (searchUsername != null) {
+                        if (searchUsername.equals(username)) {
+                            ras.close();
+                            return i;
+                        }
                     }
                 }
             }
