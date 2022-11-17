@@ -846,7 +846,6 @@ public class Conta {
 
         float num = 0;
         float den = 0;
-        long tamCompress;
 
         try {
             String arq = "bancoCompressao"+ x +".db";
@@ -855,19 +854,19 @@ public class Conta {
             for (int i = 0; i <= tam; i++){
                 ras.writeShort(result.get(i));
             }
-            
-            tamCompress = ras.length();
-            num = (float)tam;
-            den = (float)tamCompress;
-            System.out.println(tamCompress);
+
+            ras.close();
             
         } catch (Exception e) {
 
         }
+        
+        num = ((float)tam*2)-1;
+        den = (float)tamCom;
 
         System.out.printf("\nTaxa de Compressão: %.2f", (1-(num/den))*100);
         System.out.println("%");
-        
+
     }
 
     public void toFilefromClass(){
